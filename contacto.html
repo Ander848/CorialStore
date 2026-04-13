@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contacto — PixelShop</title>
+  <title>Contacto — CorialStore</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="_shared.css"/>
+  <link rel="stylesheet" href="shared.css"/>
   <style>
     .page-hero {
       background: linear-gradient(135deg,rgba(0,229,255,0.05),rgba(255,45,111,0.03));
@@ -119,7 +119,7 @@
   </style>
 </head>
 <body>
-  <div id="ps-nav"></div>
+  <div id="cs-nav"></div>
 
   <!-- PAGE HERO -->
   <div class="page-hero z1">
@@ -130,8 +130,8 @@
           <li class="breadcrumb-item active">Contacto</li>
         </ol>
       </nav>
-      <div class="ps-section-label">Atención al cliente</div>
-      <div class="ps-section-title" style="margin-bottom:14px">Estamos aquí para <span>ayudarte</span></div>
+      <div class="cs-label">Atención al cliente</div>
+      <div class="cs-title" style="margin-bottom:14px">Estamos aquí para <span>ayudarte</span></div>
       <p style="color:var(--muted);max-width:480px">Todas las ventas y dudas se atienden directamente por WhatsApp. Sin formularios, sin esperas.</p>
     </div>
   </div>
@@ -169,7 +169,7 @@
             <div class="composer-header">
               <div class="composer-avatar">🎮</div>
               <div>
-                <div class="composer-name">PixelShop</div>
+                <div class="composer-name">CorialStore</div>
                 <div class="composer-status">● En línea</div>
               </div>
             </div>
@@ -211,7 +211,7 @@
 
       <!-- Schedule -->
       <div class="mt-5">
-        <div class="ps-section-label mb-3">Horario</div>
+        <div class="cs-label mb-3">Horario</div>
         <div class="row">
           <div class="col-md-6">
             <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px 22px">
@@ -235,32 +235,32 @@
     </div>
   </section>
 
-  <div id="ps-footer"></div>
+  <div id="cs-footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="data.js"></script>
-  <script src="ps.js"></script>
+  <script src="cs.js"></script>
   <script>
-    PS.init('contacto');
+    CS.init('contacto');
 
-    const defaultMsg = 'Hola PixelShop! Quiero información sobre sus productos 🎮';
-    document.getElementById('mainWaBtn').href = PS.waLink(defaultMsg);
-    document.getElementById('composerWaBtn').href = PS.waLink(defaultMsg);
+    const defaultMsg = 'Hola CorialStore! Quiero información sobre sus productos 🎮';
+    document.getElementById('mainWaBtn').href = CS.waLink(defaultMsg);
+    document.getElementById('composerWaBtn').href = CS.waLink(defaultMsg);
 
     // Topics
     const topics = [
-      { emoji:'🛒', label:'Hacer un pedido',      sub:'Quiero comprar un producto',          msg:'Hola PixelShop! Quiero hacer un pedido. ¿Pueden ayudarme? 🛒' },
+      { emoji:'🛒', label:'Hacer un pedido',      sub:'Quiero comprar un producto',          msg:'Hola CorialStore! Quiero hacer un pedido. ¿Pueden ayudarme? 🛒' },
       { emoji:'📦', label:'Estado de mi pedido',  sub:'Preguntar por un pedido en proceso',  msg:'Hola! Tengo un pedido en proceso y quiero saber el estado.' },
-      { emoji:'💳', label:'Métodos de pago',       sub:'Dudas sobre cómo pagar',              msg:'Hola PixelShop! Quisiera saber qué métodos de pago aceptan 💳' },
+      { emoji:'💳', label:'Métodos de pago',       sub:'Dudas sobre cómo pagar',              msg:'Hola CorialStore! Quisiera saber qué métodos de pago aceptan 💳' },
       { emoji:'🔄', label:'Garantía / Problema',   sub:'Tengo un problema con mi compra',     msg:'Hola! Tuve un problema con una compra y quisiera ayuda 🔄' },
-      { emoji:'📋', label:'Consultar catálogo',    sub:'Ver disponibilidad de productos',     msg:'Hola PixelShop! Quisiera consultar la disponibilidad de un producto.' },
-      { emoji:'💬', label:'Otra consulta',         sub:'Tengo una pregunta general',          msg:'Hola PixelShop! Tengo una consulta general 💬' },
+      { emoji:'📋', label:'Consultar catálogo',    sub:'Ver disponibilidad de productos',     msg:'Hola CorialStore! Quisiera consultar la disponibilidad de un producto.' },
+      { emoji:'💬', label:'Otra consulta',         sub:'Tengo una pregunta general',          msg:'Hola CorialStore! Tengo una consulta general 💬' },
     ];
     const topicsEl = document.getElementById('topicsGrid');
     topics.forEach(t => {
       topicsEl.innerHTML += `
         <div class="col-sm-6">
-          <a href="${PS.waLink(t.msg)}" target="_blank" class="topic-btn">
+          <a href="${CS.waLink(t.msg)}" target="_blank" class="topic-btn">
             <span class="topic-emoji">${t.emoji}</span>
             <div><div class="topic-label">${t.label}</div><div class="topic-sub">${t.sub}</div></div>
             <i class="fas fa-chevron-right ms-auto" style="color:var(--muted);font-size:0.75rem"></i>
@@ -301,13 +301,13 @@
     function updatePreview() {
       const custom = document.getElementById('customMsg').value.trim();
       const base = selectedGame
-        ? `Hola PixelShop! Me interesa un producto de ${selectedGame}.`
-        : 'Hola PixelShop!';
+        ? `Hola CorialStore! Me interesa un producto de ${selectedGame}.`
+        : 'Hola CorialStore!';
       const full = custom ? `${base} ${custom}` : base;
       const prev = document.getElementById('msgPreview');
       prev.style.display = 'block';
       prev.textContent = `Vista previa: "${full}"`;
-      document.getElementById('composerWaBtn').href = PS.waLink(full);
+      document.getElementById('composerWaBtn').href = CS.waLink(full);
     }
   </script>
 </body>
