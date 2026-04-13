@@ -89,7 +89,7 @@
     <!-- MOBILE: dropdown (only on < lg) -->
     <div class="d-lg-none mb-3">
       <div style="font-family:var(--font-ui);font-size:0.72rem;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Selecciona un juego</div>
-      <select class="mobile-select" id="mobileSelect" onchange="selectGame(this.value||null)">
+      <select class="mobile-select" id="mobileSelect" onchange="selectGame(this.value)">
         <option value="">🎮 Todos los juegos</option>
       </select>
     </div>
@@ -156,13 +156,13 @@
   const urlP = new URLSearchParams(window.location.search).get('juego');
   if (urlP && GAMES.find(g=>g.id===urlP)) activeGame = urlP;
 
-  /* ---- MOBILE DROPDOWN ---- */
+  /* ---- MOBILE DROPDOWN: construir UNA vez al init ---- */
   function buildMobile() {
     const sel = document.getElementById('mobileSelect');
     while (sel.options.length > 1) sel.remove(1);
     GAMES.forEach(g => {
       const n = g.categories.reduce((a,c)=>a+c.products.length,0);
-      sel.add(new Option(`${g.emoji} ${g.name}  (${n})`, g.id));
+      sel.add(new Option(g.emoji + ' ' + g.name + '  (' + n + ')', g.id));
     });
     sel.value = activeGame || '';
   }
@@ -171,25 +171,26 @@
   function buildDesktop() {
     const el = document.getElementById('desktopSidebar');
     const tot = GAMES.reduce((a,g)=>a+g.categories.reduce((b,c)=>b+c.products.length,0),0);
-    el.innerHTML = `
-      <button class="sidebar-btn${!activeGame?' active':''}" onclick="selectGame(null)">
-        <span class="s-emoji">🎮</span>
-        <div><div>Todos los juegos</div><div class="s-count">${tot} productos</div></div>
-      </button>`;
+    el.innerHTML =
+      '<button class="sidebar-btn' + (!activeGame?' active':'') + '" onclick="selectGame(null)">' +
+      '<span class="s-emoji">🎮</span>' +
+      '<div><div>Todos los juegos</div><div class="s-count">' + tot + ' productos</div></div>' +
+      '</button>';
     GAMES.forEach(g => {
       const n = g.categories.reduce((a,c)=>a+c.products.length,0);
-      el.innerHTML += `
-        <button class="sidebar-btn${activeGame===g.id?' active':''}" onclick="selectGame('${g.id}')">
-          <span class="s-emoji">${g.emoji}</span>
-          <div><div>${g.name}</div><div class="s-count">${n} productos</div></div>
-        </button>`;
+      el.innerHTML +=
+        '<button class="sidebar-btn' + (activeGame===g.id?' active':'') + '" onclick="selectGame(\'' + g.id + '\')">' +
+        '<span class="s-emoji">' + g.emoji + '</span>' +
+        '<div><div>' + g.name + '</div><div class="s-count">' + n + ' productos</div></div>' +
+        '</button>';
     });
   }
 
   /* ---- SELECT GAME ---- */
   function selectGame(id) {
-    activeGame = id || null;
+    activeGame = (id && id !== '') ? id : null;
     activeCat  = 'all';
+    // Solo sincronizar valor del dropdown, no reconstruirlo
     document.getElementById('mobileSelect').value = activeGame || '';
     buildDesktop();
     renderHeader();
