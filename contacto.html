@@ -244,8 +244,8 @@
     CS.init('contacto');
 
     const defaultMsg = 'Hola CorialStore! Quiero información sobre sus productos 🎮';
-    document.getElementById('mainWaBtn').href = CS.waLink(defaultMsg);
-    document.getElementById('composerWaBtn').href = CS.waLink(defaultMsg);
+    document.getElementById('mainWaBtn').href = CS.wa(defaultMsg);
+    document.getElementById('composerWaBtn').href = CS.wa(defaultMsg);
 
     // Topics
     const topics = [
@@ -260,7 +260,7 @@
     topics.forEach(t => {
       topicsEl.innerHTML += `
         <div class="col-sm-6">
-          <a href="${CS.waLink(t.msg)}" target="_blank" class="topic-btn">
+          <a href="${CS.wa(t.msg)}" target="_blank" class="topic-btn">
             <span class="topic-emoji">${t.emoji}</span>
             <div><div class="topic-label">${t.label}</div><div class="topic-sub">${t.sub}</div></div>
             <i class="fas fa-chevron-right ms-auto" style="color:var(--muted);font-size:0.75rem"></i>
@@ -307,7 +307,7 @@
       const prev = document.getElementById('msgPreview');
       prev.style.display = 'block';
       prev.textContent = `Vista previa: "${full}"`;
-      document.getElementById('composerWaBtn').href = CS.waLink(full);
+      document.getElementById('composerWaBtn').href = CS.wa(full);
     }
   </script>
 </body>

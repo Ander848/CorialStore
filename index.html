@@ -8,81 +8,155 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="shared.css"/>
   <style>
-    .hero { position:relative; padding:80px 0 70px; overflow:hidden; }
+    /* ============ HERO ============ */
+    .hero {
+      position: relative;
+      /* Subtract navbar height (~57px) so section fills viewport */
+      min-height: calc(100vh - 57px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28px 0 24px;
+      overflow: hidden;
+    }
     .hero-glow {
-      position:absolute; border-radius:50%; pointer-events:none;
+      position: absolute; border-radius: 50%; pointer-events: none;
     }
-    .hero-glow-1 { top:-120px; left:-10%; width:600px; height:600px; background:radial-gradient(ellipse,rgba(0,229,255,0.1) 0%,transparent 65%); }
-    .hero-glow-2 { top:-60px;  right:-5%;  width:500px; height:500px; background:radial-gradient(ellipse,rgba(255,45,111,0.08) 0%,transparent 65%); }
+    .hero-glow-1 { top:-140px; left:-8%;  width:600px; height:600px; background:radial-gradient(ellipse,rgba(0,229,255,0.1) 0%,transparent 65%); }
+    .hero-glow-2 { top:-80px;  right:-6%; width:500px; height:500px; background:radial-gradient(ellipse,rgba(255,45,111,0.08) 0%,transparent 65%); }
 
+    /* Kicker badge */
     .hero-kicker {
-      display:inline-flex; align-items:center; gap:8px;
-      font-family:var(--font-ui); font-size:0.72rem; font-weight:700;
-      letter-spacing:3px; text-transform:uppercase; color:var(--cyan);
-      background:rgba(0,229,255,0.07); border:1px solid rgba(0,229,255,0.22);
-      border-radius:20px; padding:6px 16px; margin-bottom:22px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-ui); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--cyan);
+      background: rgba(0,229,255,0.07); border: 1px solid rgba(0,229,255,0.22);
+      border-radius: 20px; padding: 5px 14px; margin-bottom: 16px;
     }
-    .hero-kicker .dot { width:7px; height:7px; background:var(--cyan); border-radius:50%; animation:blink 1.5s infinite; flex-shrink:0; }
+    .hero-kicker .dot { width:6px; height:6px; background:var(--cyan); border-radius:50%; animation:blink 1.5s infinite; flex-shrink:0; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
+    /* Heading — smaller so it fits above cards in one screen */
     .hero h1 {
-      font-family:var(--font-head); font-size:clamp(2.2rem,4.5vw,3.8rem);
-      font-weight:800; line-height:1.1; color:var(--text); margin-bottom:20px;
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 800; line-height: 1.1;
+      color: var(--text); margin-bottom: 14px;
     }
-    .hero h1 em     { font-style:normal; color:var(--cyan); }
-    .hero h1 strong { font-style:normal; color:var(--pink); }
-    .hero-desc { font-size:0.97rem; color:var(--muted); max-width:480px; line-height:1.7; }
+    .hero h1 em     { font-style: normal; color: var(--cyan); }
+    .hero h1 strong { font-style: normal; color: var(--pink); }
+    .hero-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 0; }
 
-    .hero-stats { display:flex; gap:32px; flex-wrap:wrap; margin-top:40px; }
-    .hero-stat-num   { font-family:var(--font-head); font-size:1.8rem; font-weight:800; line-height:1; }
-    .hero-stat-label { font-size:0.73rem; color:var(--muted); margin-top:3px; }
-
-    /* Game cards — siempre scroll horizontal (nunca compiten con el texto) */
-    .hero-games-grid {
-      display:flex; gap:14px;
-      overflow-x:auto; padding-bottom:10px;
-      scrollbar-width:thin; scrollbar-color:var(--cyan) transparent;
+    /* Stats row */
+    .hero-stats {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      margin-top: 18px; margin-bottom: 0;
+      align-items: center;
     }
-    .hero-games-grid::-webkit-scrollbar { height:4px; }
-    .hero-games-grid::-webkit-scrollbar-thumb { background:var(--cyan); border-radius:2px; }
+    .hero-stats .divider { width:1px; height:30px; background:var(--border); }
+    .hero-stat-num   { font-family:var(--font-head); font-size:1.5rem; font-weight:800; line-height:1; }
+    .hero-stat-label { font-size:0.68rem; color:var(--muted); margin-top:2px; }
 
-    .game-card-hero {
-      min-width:200px; max-width:200px;
-      border-radius:18px; overflow:hidden;
-      border:1.5px solid var(--border); background:var(--bg2);
-      transition:transform 0.25s, border-color 0.25s, box-shadow 0.25s;
-      text-decoration:none; display:block; flex-shrink:0;
+    /* ============ GAME SLIDER CARDS ============ */
+    .game-slider-wrap {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,229,255,0.4) transparent;
     }
-    @media(max-width:575px) { .game-card-hero { min-width:160px; max-width:160px; } }
-    .game-card-hero:hover { transform:translateY(-6px); border-color:rgba(0,229,255,0.4); box-shadow:0 14px 40px rgba(0,0,0,0.4); }
-    .game-card-art {
-      height:110px; display:flex; align-items:center; justify-content:center;
-      font-size:3.2rem; position:relative; overflow:hidden;
-    }
-    .game-card-art::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom,transparent 40%,rgba(14,14,28,0.85) 100%); }
-    .game-card-body { padding:12px 14px 16px; }
-    .game-card-name  { font-family:var(--font-head); font-size:0.9rem; font-weight:800; color:var(--text); margin-bottom:3px; }
-    .game-card-sub   { font-size:0.7rem; color:var(--muted); }
-    .game-card-count { font-family:var(--font-ui); font-size:0.68rem; font-weight:700; color:var(--cyan); letter-spacing:1px; margin-top:8px; }
+    .game-slider-wrap::-webkit-scrollbar { height: 3px; }
+    .game-slider-wrap::-webkit-scrollbar-thumb { background: rgba(0,229,255,0.4); border-radius: 2px; }
 
-    /* Steps */
+    .gcard {
+      flex-shrink: 0;
+      /* Each card takes ~1/5 of container width, min 200px */
+      width: calc(20% - 6px);
+      min-width: 260px;
+      height: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.06);
+      transition: transform 0.28s, border-color 0.28s, box-shadow 0.28s;
+      display: block;
+    }
+    .gcard:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(0,229,255,0.5);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    /* Background image fills the card */
+    .gcard-bg {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.4s;
+    }
+    .gcard:hover .gcard-bg { transform: scale(1.06); }
+
+    /* Dark gradient overlay so text is readable */
+    .gcard-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.35) 40%,
+        rgba(0,0,0,0.85) 100%
+      );
+    }
+
+    /* Content at the bottom of the card */
+    .gcard-body {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 20px 24px;
+    }
+    .gcard-name {
+      font-family: var(--font-head);
+      font-size: 1.3rem; font-weight: 800;
+      color: #fff; margin-bottom: 4px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+    .gcard-sub {
+      font-size: 0.78rem; color: rgba(255,255,255,0.72);
+      line-height: 1.4; margin-bottom: 10px;
+    }
+    .gcard-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700;
+      color: var(--cyan); letter-spacing: 0.5px;
+      background: rgba(0,229,255,0.12);
+      border: 1px solid rgba(0,229,255,0.3);
+      border-radius: 20px; padding: 4px 12px;
+      transition: background 0.2s;
+    }
+    .gcard:hover .gcard-cta { background: rgba(0,229,255,0.22); }
+
+    @media (max-width: 767px) {
+      .hero { min-height: auto; padding: 32px 0 28px; }
+      .gcard { min-width: 220px; height: 340px; width: 220px; }
+      .hero h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+    }
+
+    /* ============ REST OF SECTIONS ============ */
     .step-card { position:relative; background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:28px 22px; height:100%; }
     .step-num   { font-family:var(--font-head); font-size:3rem; font-weight:800; color:rgba(0,229,255,0.07); position:absolute; top:14px; right:18px; line-height:1; }
     .step-icon  { font-size:1.8rem; margin-bottom:14px; }
     .step-title { font-family:var(--font-ui); font-size:0.95rem; font-weight:700; color:var(--text); margin-bottom:8px; }
     .step-desc  { font-size:0.82rem; color:var(--muted); line-height:1.6; }
 
-    /* Features */
     .feat-icon { width:48px; height:48px; border-radius:14px; background:rgba(0,229,255,0.07); border:1px solid rgba(0,229,255,0.18); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
 
-    /* Testimonials */
     .test-card { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:24px 20px; height:100%; }
     .test-stars  { color:var(--amber); font-size:0.88rem; margin-bottom:10px; }
     .test-text   { font-size:0.85rem; color:var(--muted); line-height:1.65; font-style:italic; }
     .test-author { margin-top:14px; font-family:var(--font-ui); font-weight:700; font-size:0.85rem; color:var(--text); }
     .test-game   { font-size:0.73rem; color:var(--muted); }
 
-    /* CTA */
     .cta-banner {
       background:linear-gradient(135deg,rgba(0,229,255,0.07) 0%,rgba(255,45,111,0.05) 100%);
       border:1px solid var(--border); border-radius:24px; padding:56px 36px;
@@ -99,27 +173,27 @@
   <div class="hero-glow hero-glow-1"></div>
   <div class="hero-glow hero-glow-2"></div>
   <div class="container">
-    <!-- Texto centrado, ancho completo -->
-    <div class="row justify-content-center text-center text-md-start">
-      <div class="col-lg-8 fade-up">
-        <div class="hero-kicker" style="margin:0 auto 22px;"><span class="dot"></span> Tienda Online Gaming</div>
-        <h1>Cuentas y objetos de <em>videojuegos</em><br>al <strong>mejor precio</strong></h1>
-        <p class="hero-desc" style="margin:0 auto;">Robux, V-Bucks, Diamonds, cuentas premium y objetos raros. Todo verificado, entrega en minutos vía WhatsApp.</p>
-        <div class="d-flex gap-3 mt-4 flex-wrap justify-content-center justify-content-md-start fade-up fade-up-2">
+
+    <!-- Texto + stats compactos -->
+    <div class="row justify-content-center text-center mb-4">
+      <div class="col-lg-9 fade-up">
+        <h1>Cuentas y objetos de <em>videojuegos</em> al <strong>mejor precio</strong></h1>
+        <p class="hero-desc">Robux, V-Bucks, Diamonds, cuentas premium y objetos raros.<br>Todo verificado, entrega en minutos vía WhatsApp.</p>
+        <div class="d-flex gap-3 mt-3 mb-3 flex-wrap justify-content-center fade-up fade-up-2">
           <a href="catalogo.html" class="btn-cs-primary"><i class="fas fa-store"></i> Ver catálogo</a>
           <a href="contacto.html" class="btn-cs-ghost"><i class="fab fa-whatsapp"></i> Contactar</a>
         </div>
-        <div class="hero-stats justify-content-center justify-content-md-start fade-up fade-up-3">
+        <div class="hero-stats justify-content-center fade-up fade-up-3">
           <div>
             <div class="hero-stat-num" style="color:var(--cyan)">500+</div>
             <div class="hero-stat-label">Clientes satisfechos</div>
           </div>
-          <div style="width:1px;background:var(--border)"></div>
+          <div class="divider"></div>
           <div>
             <div class="hero-stat-num" style="color:var(--pink)">5</div>
             <div class="hero-stat-label">Juegos disponibles</div>
           </div>
-          <div style="width:1px;background:var(--border)"></div>
+          <div class="divider"></div>
           <div>
             <div class="hero-stat-num" style="color:var(--green)">‹30m</div>
             <div class="hero-stat-label">Tiempo de entrega</div>
@@ -128,12 +202,9 @@
       </div>
     </div>
 
-    <!-- Tarjetas de juegos en scroll horizontal, debajo del texto -->
-    <div class="row mt-5">
-      <div class="col-12 fade-up fade-up-2">
-        <div class="hero-games-grid" id="heroCards"></div>
-      </div>
-    </div>
+    <!-- Tarjetas grandes con imagen de fondo -->
+    <div class="game-slider-wrap fade-up fade-up-2" id="heroCards"></div>
+
   </div>
 </section>
 
@@ -227,19 +298,33 @@
 <script>
   CS.init('home');
 
-  // Hero game cards
+  // Imágenes de fondo reales para cada juego (Wikimedia / dominio público)
+  const GAME_IMGS = {
+    roblox:    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Roblox%27s_icon.png/240px-Roblox%27s_icon.png',
+    fortnite:  'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Fortnite_wordmark.svg/320px-Fortnite_wordmark.svg.png',
+    freefire:  'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Free_Fire_logo.png/250px-Free_Fire_logo.png',
+    minecraft: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/51/Minecraft_cover.png/250px-Minecraft_cover.png',
+    valorant:  'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Valorant_logo_-_pink_color_version.svg/320px-Valorant_logo_-_pink_color_version.svg.png',
+  };
+
+  // Hero game cards — tarjetas grandes con imagen de fondo
   const heroEl = document.getElementById('heroCards');
   GAMES.forEach((g,i) => {
     const total = g.categories.reduce((a,c)=>a+c.products.length,0);
+    const imgUrl = GAME_IMGS[g.id];
     heroEl.innerHTML += `
-      <a href="catalogo.html?juego=${g.id}" class="game-card-hero fade-up fade-up-${(i%4)+1}">
-        <div class="game-card-art" style="background:linear-gradient(135deg,${g.color},${g.color2})">
-          <span style="position:relative;z-index:1">${g.emoji}</span>
+      <a href="catalogo.html?juego=${g.id}" class="gcard fade-up fade-up-${(i%4)+1}">
+        <div class="gcard-bg" style="background:linear-gradient(135deg,${g.color},${g.color2});">
+          ${imgUrl ? `<img src="${imgUrl}" alt="${g.name}"
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.7;mix-blend-mode:luminosity;"
+            onerror="this.style.display='none'"/>` : ''}
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.3">${g.emoji}</div>
         </div>
-        <div class="game-card-body">
-          <div class="game-card-name">${g.name}</div>
-          <div class="game-card-sub">${g.tagline}</div>
-          <div class="game-card-count">${total} productos →</div>
+        <div class="gcard-overlay"></div>
+        <div class="gcard-body">
+          <div class="gcard-name">${g.name}</div>
+          <div class="gcard-sub">${g.tagline}</div>
+          <div class="gcard-cta">${total} productos <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
         </div>
       </a>`;
   });

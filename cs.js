@@ -1,6 +1,6 @@
 // CORIALSTORE — Shared UI (navbar + footer + WhatsApp links)
 // ← CAMBIA TU NÚMERO AQUÍ  (521 + 10 dígitos, ej: 5214771234567)
-const CS_WA = '521XXXXXXXXXX';
+const CS_WA = '573053825822';
 
 const CS = {
   wa(msg) {
