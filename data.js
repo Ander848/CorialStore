@@ -60,13 +60,13 @@ const GAMES = [
   {
     id: 'freefire', name: 'Free Fire', emoji: '🔥',
     color: '#e55c00', color2: '#7a1500',
-    tagline: 'Diamonds, cuentas heroicas y personajes exclusivos',
+    tagline: 'Diamantes, cuentas heroicas y personajes exclusivos',
     categories: [
-      { id:'diamonds', label:'💎 Diamonds', products: [
-        { icon:'💎', name:'100 Diamonds',   desc:'Envío directo a tu ID. Entrega en minutos.',                price:'$30',   avail:false  },
-        { icon:'💎', name:'500 Diamonds',   desc:'Para ruleta o skins de la tienda.',                        price:'$130',  avail:true  },
-        { icon:'💎', name:'2,000 Diamonds', desc:'Pack grande. Ideal para eventos especiales.',              price:'$480',  avail:true  },
-        { icon:'💎', name:'5,000 Diamonds', desc:'Máxima cantidad. Para coleccionistas de ropa rara.',       price:'$1,150',avail:true  },
+      { id:'diamantes', label:'💎 Diamantes', products: [
+        { icon:'💎', name:'100 Diamantes',   desc:'Envío directo a tu ID. Entrega en minutos.',                price:'$30',   avail:false  },
+        { icon:'💎', name:'500 Diamantes',   desc:'Para ruleta o skins de la tienda.',                        price:'$130',  avail:true  },
+        { icon:'💎', name:'2,000 Diamantes', desc:'Pack grande. Ideal para eventos especiales.',              price:'$480',  avail:true  },
+        { icon:'💎', name:'5,000 Diamantes', desc:'Máxima cantidad. Para coleccionistas de ropa rara.',       price:'$1,150',avail:true  },
       ]},
       { id:'cuentas', label:'👤 Cuentas', products: [
         { icon:'🔥', name:'Cuenta Heroica',      desc:'Rango Heroico, 30+ skins de armas y personajes.',     price:'$350', avail:true  },
