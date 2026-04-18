@@ -250,23 +250,39 @@
 <script src="cs.js"></script>
 <script>
 /* ============================================================
-     IMÁGENES DE FONDO — CONFIGURACIÓN MANUAL
+     🖼️  IMÁGENES DE FONDO — CONFIGURACIÓN MANUAL
      ============================================================
-     Pon aquí la ruta o URL de tu imagen para cada juego.
-     Ejemplos:
-       './img/roblox.jpg'       ← imagen local en carpeta img/
-       './img/fortnite.png'
-       'https://tu-sitio.com/imagen.jpg'  ← URL externa
-
-     Si dejas el valor como cadena vacía '' se mostrará
-     solo el color de fondo del juego sin imagen.
+     Instrucciones:
+       • Crea una carpeta llamada  img/  junto a tus archivos HTML
+       • Copia tus imágenes ahí y escribe la ruta aquí abajo
+       • Ejemplo local:   './img/roblox.jpg'
+       • Ejemplo URL:     'https://tusitio.com/roblox.jpg'
+       • Si dejas ''  la tarjeta se ve oscura (sin color ni imagen)
   ============================================================ */
   const GAME_IMGS = {
-    roblox:    '',   // ← pon tu imagen de Roblox aquí
-    fortnite:  '',   // ← pon tu imagen de Fortnite aquí
-    freefire:  '',   // ← pon tu imagen de Free Fire aquí
-    minecraft: '',   // ← pon tu imagen de Minecraft aquí
-    valorant:  '',   // ← pon tu imagen de Valorant aquí
+    // ── SIDEBAR (botones laterales del catálogo) ────────────────
+    sidebar_roblox:    '',  // Sidebar · Roblox
+    sidebar_fortnite:  './img/negro.webp',  // Sidebar · Fortnite
+    sidebar_freefire:  '',  // Sidebar · Free Fire
+    sidebar_minecraft: '',  // Sidebar · Minecraft
+    sidebar_valorant:  '',  // Sidebar · Valorant
+
+    // ── BANNER (banner grande al seleccionar un juego) ──────────
+    banner_roblox:    '',   // Banner · Roblox
+    banner_fortnite:  './img/negro.webp',   // Banner · Fortnite
+    banner_freefire:  '',   // Banner · Free Fire
+    banner_minecraft: '',   // Banner · Minecraft
+    banner_valorant:  '',   // Banner · Valorant
+
+    // ── PRODUCTOS (fondo genérico por juego — aplica a todos sus productos) ─
+    // PRIORIDAD: si el producto tiene img en data.js, esa imagen manda.
+    // Si no, se usa esta imagen genérica del juego.
+    // Si tampoco hay, fondo oscuro sin imagen.
+    producto_roblox:    '', // Fondo genérico · Roblox
+    producto_fortnite:  './img/', // Fondo genérico · Fortnite
+    producto_freefire:  '', // Fondo genérico · Free Fire
+    producto_minecraft: '', // Fondo genérico · Minecraft
+    producto_valorant:  '', // Fondo genérico · Valorant
   };
 
   CS.init('catalogo');
@@ -307,10 +323,10 @@
 
     GAMES.forEach(g => {
       const n    = g.categories.reduce((a,c)=>a+c.products.length,0);
-      const img  = GAME_IMGS[g.id] || '';
+      const img  = GAME_IMGS['sidebar_' + g.id] || '';
       const bgStyle = img
-        ? 'background:linear-gradient(135deg,' + g.color + ',' + g.color2 + ');background-image:url(' + img + ');background-size:cover;background-position:center;'
-        : 'background:linear-gradient(135deg,' + g.color + ',' + g.color2 + ');';
+        ? 'background:#0a0a16;background-image:url(' + img + ');background-size:cover;background-position:center;'
+        : 'background:#0a0a16;';
       el.innerHTML +=
         '<button class="sidebar-btn' + (activeGame===g.id?' active':'') + '" onclick="selectGame(\'' + g.id + '\')">' +
           '<div class="sb-bg" style="' + bgStyle + '"></div>' +
@@ -340,12 +356,12 @@
     const el = document.getElementById('gameHeader');
     if (!activeGame) { el.innerHTML=''; return; }
     const g = GAMES.find(x=>x.id===activeGame);
-    const imgUrl = GAME_IMGS[g.id] || '';
+    const imgUrl = GAME_IMGS['banner_' + g.id] || '';
     el.innerHTML = `
       <div class="game-banner">
-        <div class="game-banner-bg" style="background:linear-gradient(135deg,${g.color},${g.color2});">
+        <div class="game-banner-bg" style="background:#0a0a16;">
           ${imgUrl ? `<img src="${imgUrl}" alt="${g.name}"
-            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;mix-blend-mode:luminosity;"
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;"
             onerror="this.style.display='none'"/>` : ''}
         </div>
         <div class="game-banner-overlay"></div>
@@ -408,14 +424,16 @@
     grid.innerHTML = prods.map(p => {
       const msg = `Hola CorialStore! Quiero comprar: ${p.name} (${p.gameName}) - ${p.price} MXN. Por favor confirma disponibilidad y método de pago.`;
       const g = GAMES.find(x => x.id === p.gameId);
-      const imgUrl = GAME_IMGS[p.gameId] || '';
-      const bgColor = g ? `linear-gradient(135deg,${g.color},${g.color2})` : '#0e0e1c';
+      // Imagen individual del producto (p.img) tiene prioridad.
+      // Si no tiene, usa la imagen del juego (producto_GAMEID).
+      // Si tampoco hay, fondo oscuro.
+      const imgUrl = p.img || GAME_IMGS['producto_' + p.gameId] || '';
       return `
         <div class="col-6 col-md-4">
           <div class="pcard">
-            <div class="pcard-bg" style="background:${bgColor};">
-              ${imgUrl ? `<img src="${imgUrl}" alt="${p.gameName}"
-                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35;mix-blend-mode:luminosity;"
+            <div class="pcard-bg" style="background:#0a0a16;">
+              ${imgUrl ? `<img src="${imgUrl}" alt="${p.name}"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;"
                 onerror="this.style.display='none'"/>` : ''}
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.18">${p.icon}</div>
             </div>

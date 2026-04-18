@@ -346,38 +346,45 @@
   CS.init('home');
 
   // Imágenes de fondo reales para cada juego (Wikimedia / dominio público)
-/* ============================================================
-     IMÁGENES DE FONDO — CONFIGURACIÓN MANUAL
+  /* ============================================================
+     🖼️  IMÁGENES DE FONDO — CONFIGURACIÓN MANUAL
      ============================================================
-     Pon aquí la ruta o URL de tu imagen para cada juego.
-     Ejemplos:
-       './img/roblox.jpg'       ← imagen local en carpeta img/
-       './img/fortnite.png'
-       'https://tu-sitio.com/imagen.jpg'  ← URL externa
+     Instrucciones:
+       • Crea una carpeta llamada  img/  junto a tus archivos HTML
+       • Copia tus imágenes ahí y escribe la ruta aquí abajo
+       • Ejemplo local:   './img/roblox.jpg'
+       • Ejemplo URL:     'https://tusitio.com/roblox.jpg'
+       • Si dejas ''  la tarjeta se ve oscura (sin color ni imagen)
 
-     Si dejas el valor como cadena vacía '' se mostrará
-     solo el color de fondo del juego sin imagen.
+     SLIDER INICIO — tarjetas grandes del hero (5 tarjetas):
   ============================================================ */
   const GAME_IMGS = {
-    roblox:    '',   // ← pon tu imagen de Roblox aquí
-    fortnite:  '',   // ← pon tu imagen de Fortnite aquí
-    freefire:  '',   // ← pon tu imagen de Free Fire aquí
-    minecraft: '',   // ← pon tu imagen de Minecraft aquí
-    valorant:  '',   // ← pon tu imagen de Valorant aquí
+    // ── SLIDER INICIO (tarjetas grandes del hero) ──────────────
+    hero_roblox:    '',   // Slider grande · Roblox
+    hero_fortnite:  './img/perfilfortnite.avif',   // Slider grande · Fortnite
+    hero_freefire:  '',   // Slider grande · Free Fire
+    hero_minecraft: '',   // Slider grande · Minecraft
+    hero_valorant:  '',   // Slider grande · Valorant
+
+    // ── SECCIÓN "ELIGE TU JUEGO" (tarjetas medianas del inicio) ─
+    juego_roblox:    './img/roblox1.webp',  // Tarjeta juego · Roblox
+    juego_fortnite:  '',  // Tarjeta juego · Fortnite
+    juego_freefire:  '',  // Tarjeta juego · Free Fire
+    juego_minecraft: '',  // Tarjeta juego · Minecraft
+    juego_valorant:  '',  // Tarjeta juego · Valorant
   };
 
   // Hero game cards — tarjetas grandes con imagen de fondo
   const heroEl = document.getElementById('heroCards');
   GAMES.forEach((g,i) => {
     const total = g.categories.reduce((a,c)=>a+c.products.length,0);
-    const imgUrl = GAME_IMGS[g.id];
+    const imgUrl = GAME_IMGS['hero_' + g.id];
     heroEl.innerHTML += `
       <a href="catalogo.html?juego=${g.id}" class="gcard fade-up fade-up-${(i%4)+1}">
-        <div class="gcard-bg" style="background:linear-gradient(135deg,${g.color},${g.color2});">
+        <div class="gcard-bg" style="background:#0a0a16;">
           ${imgUrl ? `<img src="${imgUrl}" alt="${g.name}"
-            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.7;mix-blend-mode:luminosity;"
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;"
             onerror="this.style.display='none'"/>` : ''}
-          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.3">${g.emoji}</div>
         </div>
         <div class="gcard-overlay"></div>
         <div class="gcard-body">
@@ -392,15 +399,14 @@
   const gamesEl = document.getElementById('gamesGrid');
   GAMES.forEach((g,i) => {
     const total = g.categories.reduce((a,c)=>a+c.products.length,0);
-    const imgUrl = GAME_IMGS[g.id];
+    const imgUrl = GAME_IMGS['juego_' + g.id];
     gamesEl.innerHTML += `
       <div class="col-6 col-md-4">
         <a href="catalogo.html?juego=${g.id}" class="jcard fade-up fade-up-${(i%4)+1}">
-          <div class="jcard-bg" style="background:linear-gradient(135deg,${g.color},${g.color2});">
+          <div class="jcard-bg" style="background:#0a0a16;">
             ${imgUrl ? `<img src="${imgUrl}" alt="${g.name}"
-              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.65;mix-blend-mode:luminosity;"
+              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;"
               onerror="this.style.display='none'"/>` : ''}
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3.5rem;opacity:0.25">${g.emoji}</div>
           </div>
           <div class="jcard-overlay"></div>
           <div class="jcard-body">
